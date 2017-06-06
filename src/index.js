@@ -9,14 +9,19 @@ import Content from './content';
 import { Router, Route, IndexRoute } from 'react-router';
 import createHistory from 'history/createBrowserHistory'
 import registerServiceWorker from './registerServiceWorker';
+import {Provider} from 'react-redux';
+import store from './redux/store'
 import './index.css';
 var history = createHistory();
-ReactDOM.render(  <Router history={ history }>
+ReactDOM.render( 
+<Provider store={store}>
+ <Router history={ history }>
 	<div>
 	<Route path='/' component={Nav} />
 	<Route exact path='/user/login' component={Content} />
 	
 	</div>
 	</Router>
+		</Provider>
 	, document.getElementById('root'));
 registerServiceWorker();
