@@ -1,38 +1,20 @@
 import axios from 'axios';
 import jwt from 'jsonwebtoken';
 var initialState : {
-	email:'',
-	password:'',
+	
+	isAuthenticated:false,
+	user :{}
 	
 };
 const loginreducer = (state = initialState,action) => {
 	switch(action.type){
-		case 'ATTEMPT_LOGIN':
-		var send = {
-		    "email": action.data.email,
-		    "password": action.data.password,
-		  };
 
-		  axios({
-              url: 'http://localhost:5000/api/authenticate',
-              method:'POST',
-               headers: {
-			    "Content-Type": "application/json"
-			  },
-	         data: send
-            }).then(function(res){    
-            console.log(res)  	;
-            	var token =  res.data.token;
-               	console.log(jwt.decode(token));
-            }).catch(function(err){
-
-             
-            }); 
-		state = {...state,email:action.data.email,password:action.data.password};
-		break;
-
-		// case 'SET_CURRENT_USER':
-		
+		case 'SET_CURRENT_USER':
+		console.log(action.data);
+		console.log(action.data.exp);
+		 // state = {...state,user:action.data._doc,isAuthenticated:true};
+		state = {...state,user:action.data._doc,isAuthenticated:true};
+		break;			 
 	}
 
 	return state;
@@ -41,3 +23,5 @@ const loginreducer = (state = initialState,action) => {
 export default loginreducer;
 
 
+
+		

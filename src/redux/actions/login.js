@@ -8,7 +8,7 @@ var send = {
 		    "password": detail.password,
 		  };
 
-console.log(detail);
+
 return dispatch => {
 	return   axios({
               url: 'http://localhost:5000/api/authenticate',
@@ -16,15 +16,16 @@ return dispatch => {
                headers: {
 			    "Content-Type": "application/json"
 			  },
-	         data: "send"
+	         data: send
             }).then(function(res){  
-             dispatch(setCurrentUser(jwt.decode(token)));  
-            console.log(res)  	;
+
             	var token =  res.data.token;
-               	console.log(jwt.decode(token));
+               
+             dispatch(setCurrentUser(jwt.decode(token)));  
+          
             });
 }
-};
+}
 
 
 // export const sendLogin = (detail)=>{
@@ -35,10 +36,10 @@ return dispatch => {
 // }
 // };
 
-export const setCurrentUser = (detail)=>{
+export const setCurrentUser = (data)=>{
 
 return {
 	type:"SET_CURRENT_USER",
-	data:detail
+	data:data
 }
 }

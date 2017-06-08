@@ -14,7 +14,8 @@ class Login extends Component {
 		this.state = {
 			email: '',
 			password:'',
-			errors:{}
+			errors:{},
+
 		}
 	}
 	submitLogin(e){
@@ -71,9 +72,15 @@ class Login extends Component {
   }
 }
 
-
+// Login.propTypes = {
+//   sendLogin: React.PropTypes.func.isRequired
+// }
 
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({sendLogin:sendLogin},dispatch)
 }
-export default connect(null,mapDispatchToProps)(Login);
+function mapStateToProps(state){
+console.log(state)
+	
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Login);
