@@ -12,6 +12,9 @@ import registerServiceWorker from './registerServiceWorker';
 import {Provider} from 'react-redux';
 import store from './redux/store'
 import './index.css';
+import setAuthorizationToken from './redux/utils';
+setAuthorizationToken(localStorage.getItem('jwtToken'));
+
 var history = createHistory();
 ReactDOM.render( 
 <Provider store={store}>

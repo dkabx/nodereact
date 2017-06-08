@@ -9,6 +9,7 @@ import Register from '../register/register';
 import { Router, Route, IndexRoute } from 'react-router';
 import {NavLink} from 'react-router-dom';
 
+
 class Nav extends Component {
   render() {
     return (

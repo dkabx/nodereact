@@ -34,7 +34,7 @@ class Login extends Component {
     return (
       	<div className="container loginContainer" >
 			<div className="row main">
-
+			
 				<div className="main-login main-center">
 					<form className="form-horizontal" onSubmit={this.submitLogin} method="get" action="/user/login">
 						<div className="form-group">
@@ -70,6 +70,8 @@ class Login extends Component {
     );
   }
 }
+
+
 
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({sendLogin:sendLogin},dispatch)
