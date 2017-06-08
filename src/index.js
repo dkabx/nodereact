@@ -13,16 +13,22 @@ import {Provider} from 'react-redux';
 import store from './redux/store'
 import './index.css';
 import setAuthorizationToken from './redux/utils';
+import {setCurrentUser} from './redux/actions/login';
+if(localStorage.getItem('jwtToken')){
+  alert("d");
 setAuthorizationToken(localStorage.getItem('jwtToken'));
+store.dispatch(setCurrentUser(localStorage.getItem('jwtToken')));
+}
+
 
 var history = createHistory();
-ReactDOM.render( 
+ReactDOM.render(
 <Provider store={store}>
  <Router history={ history }>
 	<div>
 	<Route path='/' component={Nav} />
 	<Route exact path='/user/login' component={Content} />
-	
+
 	</div>
 	</Router>
 		</Provider>

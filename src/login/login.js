@@ -20,9 +20,9 @@ class Login extends Component {
 	}
 	submitLogin(e){
 		e.preventDefault();
-		
+
 		this.props.sendLogin(this.state);
-		
+
 	}
 
 	emailChange(e){
@@ -35,7 +35,7 @@ class Login extends Component {
     return (
       	<div className="container loginContainer" >
 			<div className="row main">
-			
+
 				<div className="main-login main-center">
 					<form className="form-horizontal" onSubmit={this.submitLogin} method="get" action="/user/login">
 						<div className="form-group">
@@ -57,7 +57,7 @@ class Login extends Component {
 								</div>
 							</div>
 						</div>
-						
+
 						<div className="form-group ">
 							<button type="submit" className="btn btn-primary btn-lg btn-block login-button">Login</button>
 						</div>
@@ -80,7 +80,9 @@ function mapDispatchToProps(dispatch){
 	return bindActionCreators({sendLogin:sendLogin},dispatch)
 }
 function mapStateToProps(state){
-console.log(state)
-	
+if(state){
+	console.log(state.user);
+}
+
 }
 export default connect(mapStateToProps,mapDispatchToProps)(Login);

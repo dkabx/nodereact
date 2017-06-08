@@ -17,12 +17,12 @@ return dispatch => {
 			    "Content-Type": "application/json"
 			  },
 	         data: send
-            }).then(function(res){  
+            }).then(function(res){
 
             	var token =  res.data.token;
-               
-             dispatch(setCurrentUser(jwt.decode(token)));  
-          
+               localStorage.setItem('jwtToken',token);
+             dispatch(setCurrentUser(jwt.decode(token)));
+
             });
 }
 }

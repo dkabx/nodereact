@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {connect} from 'react-redux';
 import '../App.css';
 
 class Home extends Component {
@@ -9,5 +9,8 @@ class Home extends Component {
     );
   }
 }
+function mapStateToProps(state){
+  console.log("HO",state);
+}
 
-export default Home;
+export default connect(mapStateToProps,null)(Home);
