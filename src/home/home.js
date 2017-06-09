@@ -10,7 +10,11 @@ class Home extends Component {
   }
 }
 function mapStateToProps(state){
-  console.log("HO",state);
+ if(state){
+ 	return{
+ 		user:state.user
+ 	}
+ }
 }
 
 export default connect(mapStateToProps,null)(Home);

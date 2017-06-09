@@ -18,10 +18,16 @@ return dispatch => {
 			  },
 	         data: send
             }).then(function(res){
+            	if(res.data.success){
+		             var token =  res.data.token;
+		             localStorage.setItem('jwtToken',token);
+		             dispatch(setCurrentUser(jwt.decode(token)));
+            	}
+            	else {
 
-            	var token =  res.data.token;
-               localStorage.setItem('jwtToken',token);
-             dispatch(setCurrentUser(jwt.decode(token)));
+            		dispatch(invalidUser()); 
+            	}
+           
 
             });
 }
@@ -42,4 +48,20 @@ return {
 	type:"SET_CURRENT_USER",
 	data:data
 }
+}
+
+export const logoutUser = () =>{
+	return {
+		type:"LOGOUT_USER",
+		data:''
+	}
+}
+
+export const invalidUser = ()=>{
+
+	return {
+		type:"INVALID_USER",
+		data:''
+	}
+
 }

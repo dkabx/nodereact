@@ -6,7 +6,12 @@ import {sendLogin} from '../redux/actions/login';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 import store from '../redux/store';
+import io from 'socket.io-client';
+const socket = io.connect("http://localhost:5000");
+socket.on('message', msg => console.log(msg));
+// import createHistory from 'history/createBrowserHistory';
 
+// var history = createHistory();
 class Login extends Component {
 	constructor(){
 		super();
@@ -20,11 +25,19 @@ class Login extends Component {
 	}
 	submitLogin(e){
 		e.preventDefault();
-
-		this.props.sendLogin(this.state);
+		this.props.sendLogin(this.state).then(
+			(res)=>  {if(this.props.auth){
+				this.props.history.push('/');
+			}},
+			(err) =>this.setState({ errors: "err.response.data.errors"})
+			);
 
 	}
-
+	componentWillMount(){
+		if(this.props.auth){
+			this.props.history.push('/');
+		}
+	}
 	emailChange(e){
 		this.setState({email:e.target.value});
 	}
@@ -37,6 +50,10 @@ class Login extends Component {
 			<div className="row main">
 
 				<div className="main-login main-center">
+					 {this.props.error ? <div className="alert alert-danger error-align">
+			             <b> Invalid Credentials</b>
+			         </div> : ''}
+				
 					<form className="form-horizontal" onSubmit={this.submitLogin} method="get" action="/user/login">
 						<div className="form-group">
 							<label for="username" className="cols-sm-2 control-label">Email</label>
@@ -64,6 +81,8 @@ class Login extends Component {
 						<div className="login-register">
 				            <NavLink to='/register'>Register </NavLink >
 				    </div>
+				   
+
 					</form>
 				</div>
 			</div>
@@ -75,13 +94,21 @@ class Login extends Component {
 // Login.propTypes = {
 //   sendLogin: React.PropTypes.func.isRequired
 // }
+Login.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
 
 function mapDispatchToProps(dispatch){
 	return bindActionCreators({sendLogin:sendLogin},dispatch)
 }
 function mapStateToProps(state){
+	console.log(state);
 if(state){
-	console.log(state.user);
+	return {
+		user:state.user,
+		auth:state.isAuthenticated,
+		error:state.errors
+	}
 }
 
 }

@@ -3,20 +3,31 @@ import jwt from 'jsonwebtoken';
 var initialState : {
 	
 	isAuthenticated:false,
-	user :{}
+	user :{},
+	errors:""
 	
 };
 const loginreducer = (state = initialState,action) => {
 	switch(action.type){
 
 		case 'SET_CURRENT_USER':
-		console.log(action.data);
-		console.log(action.data.exp);
-		 // state = {...state,user:action.data._doc,isAuthenticated:true};
-		state = {...state,user:action.data._doc,isAuthenticated:true};
-		break;			 
-	}
 
+		state = {...state,user:action.data._doc,isAuthenticated:true,errors:null};
+		break;			 
+
+		case 'LOGOUT_USER':
+
+		localStorage.removeItem('jwtToken');
+		state = {...state,user:null,isAuthenticated:false,errors:null}
+		break;
+
+		case "INVALID_USER":
+		 state = {...state,user:null,isAuthenticated:false,errors:"Invalid Crendentials"}
+		break;
+	}
+	
+		
+	
 	return state;
 }
 

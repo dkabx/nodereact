@@ -8,41 +8,43 @@ import Login from '../login/login';
 import Register from '../register/register';
 import { Router, Route, IndexRoute } from 'react-router';
 import {NavLink} from 'react-router-dom';
+import {connect} from 'react-redux' ;
+import {logoutUser} from '../redux/actions/login' ;
+import {bindActionCreators} from 'redux';
 
 
 class Nav extends Component {
+  logout(){
+    this.props.logoutUser()
+   this.props.history.push('/');
+
+  }
   render() {
     return (
 <div>
-   <nav className="navbar navbar-default">
+   <nav className="navbar  navbar-inverse">
     <div className="container-fluid">
       <div className="navbar-header">
         <a className="navbar-brand" href="#">WebSiteName</a>
       </div>
       <ul className="nav navbar-nav">
         
-        <li><NavLink  activeClassName="active"  to='/'>Home</NavLink></li>
-        <li><NavLink activeClassName="active" to='/login'>Login</NavLink></li>
+        <li><NavLink  activeClassName="actidve"  to='/'>Home</NavLink></li>
+        {this.props.user ? <li><NavLink activeClassName="active" to=''>{this.props.user.email}</NavLink></li> : <li><NavLink activeClassName="active" to='/login'>Login</NavLink></li>}
         <li><NavLink  activeClassName="active" to='/content'>Content</NavLink></li> 
       </ul>
-   <ul className="navbarv navbar-nav ">
-          <li className="dropdown">
-              <a className="dropdown-toggle" data-toggle="dropdown" href="#" id='messagecount'> 
-              <span className="glyphicon glyphicon-envelope"></span><span className="badge" id='mno'></span></a>  
-            <ul className="dropdown-menu" id='dynamicmessage'>        
-            </ul>
-          </li>
-      </ul>
-           <ul className="nav navbar-nav navbar-right">
-          <li className="dropdown">
-           <a className="dropdown-toggle" data-toggle="dropdown" href="#">Page 1
-              <span className="caret"></span></a>
-        <ul className="dropdown-menu">
-          <li><a href="#"><span className="glyphicon glyphicon-user"></span> My Profile</a></li>
-          <li><a href="/user/logout"><span className="glyphicon glyphicon-log-in"></span> Logout</a></li>
-      </ul>
-    </li>
-      </ul>
+   <ul className="nav navbar-nav ">
+        <li className="dropdown">
+        
+            <a className="dropdown-toggle" data-toggle="dropdown" href="#" id='messagecount'> 
+            <span className="glyphicon glyphicon-envelope"></span><span className="badge" id='mno'></span></a>  
+          <ul className="dropdown-menu" id='dynamicmessage'>
+         
+          </ul>
+        </li>
+    </ul>
+    {this.props.auth ?  <ul className="nav navbar-nav navbar-right"><li ><a  href="#" onClick={this.logout.bind(this)}><b>Logout</b></a></li></ul> : ''}
+        
     </div>
   </nav>
 
@@ -56,4 +58,23 @@ class Nav extends Component {
   }
 }
 
-export default Nav;
+Nav.contextTypes = {
+  router: React.PropTypes.object.isRequired
+}
+
+function mapStateToProps(state){
+  
+  if(state){
+    return {
+      user:state.user,
+      auth:state.isAuthenticated
+    }
+  }
+}
+
+function mapDispatchToProps(dispatch){
+  return bindActionCreators({logoutUser:logoutUser},dispatch)
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Nav);
+

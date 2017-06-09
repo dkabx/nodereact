@@ -14,15 +14,20 @@ import store from './redux/store'
 import './index.css';
 import setAuthorizationToken from './redux/utils';
 import {setCurrentUser} from './redux/actions/login';
+import jwt from 'jsonwebtoken';
+import { SocketProvider } from 'socket.io-react';
+import io from 'socket.io-client';
+const socket = io.connect("http://localhost:5000");
 if(localStorage.getItem('jwtToken')){
-  alert("d");
+console.log(localStorage.getItem('jwtToken'));
 setAuthorizationToken(localStorage.getItem('jwtToken'));
-store.dispatch(setCurrentUser(localStorage.getItem('jwtToken')));
+store.dispatch(setCurrentUser(jwt.decode(localStorage.getItem('jwtToken'))));
 }
 
 
 var history = createHistory();
 ReactDOM.render(
+	<SocketProvider socket={socket}>
 <Provider store={store}>
  <Router history={ history }>
 	<div>
@@ -32,5 +37,6 @@ ReactDOM.render(
 	</div>
 	</Router>
 		</Provider>
+		</SocketProvider>
 	, document.getElementById('root'));
 registerServiceWorker();
