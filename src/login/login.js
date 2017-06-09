@@ -8,7 +8,7 @@ import {connect} from 'react-redux';
 import store from '../redux/store';
 import io from 'socket.io-client';
 const socket = io.connect("http://localhost:5000");
-socket.on('message', msg => console.log(msg));
+
 // import createHistory from 'history/createBrowserHistory';
 
 // var history = createHistory();
@@ -27,6 +27,7 @@ class Login extends Component {
 		e.preventDefault();
 		this.props.sendLogin(this.state).then(
 			(res)=>  {if(this.props.auth){
+
 				this.props.history.push('/');
 			}},
 			(err) =>this.setState({ errors: "err.response.data.errors"})
@@ -53,7 +54,7 @@ class Login extends Component {
 					 {this.props.error ? <div className="alert alert-danger error-align">
 			             <b> Invalid Credentials</b>
 			         </div> : ''}
-				
+
 					<form className="form-horizontal" onSubmit={this.submitLogin} method="get" action="/user/login">
 						<div className="form-group">
 							<label for="username" className="cols-sm-2 control-label">Email</label>
@@ -81,7 +82,7 @@ class Login extends Component {
 						<div className="login-register">
 				            <NavLink to='/register'>Register </NavLink >
 				    </div>
-				   
+
 
 					</form>
 				</div>

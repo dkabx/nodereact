@@ -28,23 +28,23 @@ class Nav extends Component {
         <a className="navbar-brand" href="#">WebSiteName</a>
       </div>
       <ul className="nav navbar-nav">
-        
+
         <li><NavLink  activeClassName="actidve"  to='/'>Home</NavLink></li>
         {this.props.user ? <li><NavLink activeClassName="active" to=''>{this.props.user.email}</NavLink></li> : <li><NavLink activeClassName="active" to='/login'>Login</NavLink></li>}
-        <li><NavLink  activeClassName="active" to='/content'>Content</NavLink></li> 
+        <li><NavLink  activeClassName="active" to='/content'>Content</NavLink></li>
       </ul>
    <ul className="nav navbar-nav ">
         <li className="dropdown">
-        
-            <a className="dropdown-toggle" data-toggle="dropdown" href="#" id='messagecount'> 
-            <span className="glyphicon glyphicon-envelope"></span><span className="badge" id='mno'></span></a>  
+
+            <a className="dropdown-toggle" data-toggle="dropdown" href="#" id='messagecount'>
+            <span className="glyphicon glyphicon-envelope"></span><span className="badge" id='mno'></span></a>
           <ul className="dropdown-menu" id='dynamicmessage'>
-         
+
           </ul>
         </li>
     </ul>
     {this.props.auth ?  <ul className="nav navbar-nav navbar-right"><li ><a  href="#" onClick={this.logout.bind(this)}><b>Logout</b></a></li></ul> : ''}
-        
+
     </div>
   </nav>
 
@@ -52,7 +52,7 @@ class Nav extends Component {
   <Route exact path="/" component={Home} />
   <Route exact path="/login" component={Login} />
   <Route exact path="/register" component={Register} />
-  
+
 </div>
     );
   }
@@ -63,7 +63,7 @@ Nav.contextTypes = {
 }
 
 function mapStateToProps(state){
-  
+
   if(state){
     return {
       user:state.user,
@@ -77,4 +77,3 @@ function mapDispatchToProps(dispatch){
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(Nav);
-
