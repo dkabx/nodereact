@@ -5,6 +5,7 @@ import  Home from '../home/home';
 import Content from '../content';
 import About from '../about/about';
 import Login from '../login/login';
+import User from '../user/user';
 import Register from '../register/register';
 import { Router, Route, IndexRoute } from 'react-router';
 import {NavLink} from 'react-router-dom';
@@ -30,7 +31,7 @@ class Nav extends Component {
       <ul className="nav navbar-nav">
 
         <li><NavLink  activeClassName="actidve"  to='/'>Home</NavLink></li>
-        {this.props.user ? <li><NavLink activeClassName="active" to=''>{this.props.user.email}</NavLink></li> : <li><NavLink activeClassName="active" to='/login'>Login</NavLink></li>}
+        {this.props.auth ? <li><NavLink activeClassName="active" to='/user'>{this.props.user.email}</NavLink></li> : <li><NavLink activeClassName="active" to='/login'>Login</NavLink></li>}
         <li><NavLink  activeClassName="active" to='/content'>Content</NavLink></li>
       </ul>
    <ul className="nav navbar-nav ">
@@ -52,6 +53,7 @@ class Nav extends Component {
   <Route exact path="/" component={Home} />
   <Route exact path="/login" component={Login} />
   <Route exact path="/register" component={Register} />
+  <Route  path="/user" component={User} />
 
 </div>
     );
@@ -63,11 +65,11 @@ Nav.contextTypes = {
 }
 
 function mapStateToProps(state){
-
+console.log(state);
   if(state){
     return {
-      user:state.user,
-      auth:state.isAuthenticated
+      user:state.loginreducer.user,
+      auth:state.loginreducer.isAuthenticated
     }
   }
 }

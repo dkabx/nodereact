@@ -19,7 +19,7 @@ import { SocketProvider } from 'socket.io-react';
 import io from 'socket.io-client';
 const socket = io.connect("http://localhost:5000");
 if(localStorage.getItem('jwtToken')){
-console.log(localStorage.getItem('jwtToken'));
+
 setAuthorizationToken(localStorage.getItem('jwtToken'));
 store.dispatch(setCurrentUser(jwt.decode(localStorage.getItem('jwtToken'))));
 }

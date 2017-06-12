@@ -27,8 +27,7 @@ class Login extends Component {
 		e.preventDefault();
 		this.props.sendLogin(this.state).then(
 			(res)=>  {if(this.props.auth){
-
-				this.props.history.push('/');
+				this.props.history.push('/user');
 			}},
 			(err) =>this.setState({ errors: "err.response.data.errors"})
 			);
@@ -36,7 +35,7 @@ class Login extends Component {
 	}
 	componentWillMount(){
 		if(this.props.auth){
-			this.props.history.push('/');
+			this.props.history.push('/user');
 		}
 	}
 	emailChange(e){
@@ -106,9 +105,9 @@ function mapStateToProps(state){
 	console.log(state);
 if(state){
 	return {
-		user:state.user,
-		auth:state.isAuthenticated,
-		error:state.errors
+		user:state.loginreducer.user,
+		auth:state.loginreducer.isAuthenticated,
+		error:state.loginreducer.errors
 	}
 }
 

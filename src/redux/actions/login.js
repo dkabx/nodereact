@@ -25,9 +25,9 @@ return dispatch => {
             	}
             	else {
 
-            		dispatch(invalidUser()); 
+            		dispatch(invalidUser());
             	}
-           
+
 
             });
 }
