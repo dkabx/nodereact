@@ -65,7 +65,7 @@ Nav.contextTypes = {
 }
 
 function mapStateToProps(state){
-console.log(state);
+
   if(state){
     return {
       user:state.loginreducer.user,

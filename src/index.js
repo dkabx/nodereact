@@ -28,11 +28,11 @@ store.dispatch(setCurrentUser(jwt.decode(localStorage.getItem('jwtToken'))));
 var history = createHistory();
 ReactDOM.render(
 	<SocketProvider socket={socket}>
-<Provider store={store}>
+<Provider store={store} >
  <Router history={ history }>
 	<div>
 	<Route path='/' component={Nav} />
-	<Route exact path='/user/login' component={Content} />
+
 
 	</div>
 	</Router>

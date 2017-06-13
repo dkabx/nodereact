@@ -38,6 +38,7 @@ class Login extends Component {
 			this.props.history.push('/user');
 		}
 	}
+
 	emailChange(e){
 		this.setState({email:e.target.value});
 	}

@@ -1,6 +1,7 @@
 
 var initialState = {
   userlist:[],
+  msg:''
 
 }
 const getUserdetails = (state = initialState,action) =>{
@@ -14,6 +15,9 @@ const getUserdetails = (state = initialState,action) =>{
       break;
       case 'SET_USER_LIST':
         state = {...state,userlist:action.data};
+        break;
+        case "SEND_MESSAGE":
+        state ={...state,msg:action.data.msg}
         break;
   }
 

@@ -78,5 +78,11 @@ class CommentBox extends Component {
   }
 }
 
+function mapStateToProps(state){
+console.log("COMMENT",state);
+  return {
 
-export default CommentBox;
+  }
+}
+
+export default connect(mapStateToProps,null)(CommentBox);

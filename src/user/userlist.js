@@ -9,9 +9,8 @@ import store from '../redux/store';
 import io from 'socket.io-client';
 import ReactDOM from 'react-dom';
 import {getUserList} from '../redux/actions/user';
+import {sendmessage} from '../redux/actions/user';
 const socket = io.connect("http://localhost:5000");
-
-
 // import createHistory from 'history/createBrowserHistory';
 
 // var history = createHistory();
@@ -24,31 +23,37 @@ class UserList extends Component {
    }
 
  }
+
+
   componentWillMount(){
+
     this.props.getUserList();
 
     socket.emit('join',{roomid:this.props.loggedUser._id});
   }
-  componentDidMount(){
-    console.log(this.refs);
-  socket.on('online',function(data){
 
-     if(this.refs != undefined && Object.keys(this.refs).length){
-     console.log("HJHJHJHHDSRESRESRSFDSFDSFDSFDSFDSFDSFDSF",data);
-   }
+componentDidMount(){
+  socket.on('new_msg',function(data){
+    store.dispatch({
+      type:"SEND_MESSAGE",
+      data:data
+    })
+    // this.props.sendmessage(data);
   });
-
-
-
-  }
-//   onFocus() {
-//   this.refs.myInput.style.display = "none";
-// }
+}
 
   joinRoom(e){
+
     this.setState({ roomid: e.target.value});
 
+
   }
+
+  sendMsg(e){
+    e.preventDefault();
+      socket.emit('new',{id:this.state.roomid,data:this.refs.msg.value,name:this.props.loggedUser.email});
+  }
+
   render() {
 
     return (
@@ -59,34 +64,35 @@ class UserList extends Component {
               {this.props.userlist.length ?
                  this.props.userlist.map((user, i) => (
                    <div>
-                   <label><input className="messageCheckbox" onClick={this.joinRoom.bind(this)} value={user._id} name="a"  type="radio" /> {user.email}</label>
-                   <span style={{display: 'block'}} ><img height='8px' width="8px" src="http://www.clker.com/cliparts/Z/n/g/w/C/y/green-dot-md.png"/></span>
+                   <label><input  className="messageCheckbox"  onClick={this.joinRoom.bind(this)} value={user._id} name="a"  type="radio" /> {user.email}</label>
+                   {/*<span style={{display: 'block'}} ref={user.id}><img height='8px' width="8px" src="http://www.clker.com/cliparts/Z/n/g/w/C/y/green-dot-md.png"/></span>*/}
                    </div>
                     ))
                  : ''
               }
-
       </div>
-
-            <div className="form-group" >
-                     <div>
-                       <input type='text'  ref="myInput"  className="form-control" id="sendmsg" placeholder="Tell your friends about your day" />
-                     </div>
+            <div className="form-group">
+               <div>
+               <form onSubmit={this.sendMsg.bind(this)}>
+                 <input type='text' ref='msg' className="form-control" id="sendmsg" placeholder="Tell your friends about your day" />
+                 </form>
+               </div>
            </div>
         </div>
       </div>
 )
+
   }
+
 }
 function mapStateToProps(state){
 
-console.log(state);
   return {
     userlist:state.getUserdetails.userlist,
     loggedUser:state.loginreducer.user
   }
 }
 function mapDispatchToProps(dispatch){
-  return bindActionCreators({getUserList:getUserList},dispatch)
+  return bindActionCreators({getUserList:getUserList,sendmessage:sendmessage},dispatch)
 }
 export default connect(mapStateToProps,mapDispatchToProps)(UserList);
