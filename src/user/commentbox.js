@@ -13,11 +13,6 @@ const socket = io.connect("http://localhost:5000");
 
 // var history = createHistory();
 class CommentBox extends Component {
-  constructor(){
-    super();
-
-
-  }
 
   render() {
     return (
@@ -51,11 +46,11 @@ class CommentBox extends Component {
 
      <div className="col-md-6">
              <div  id="msg">
-            {console.log(this.props.msg)}
+
             {this.props.msg.length ? this.props.msg.map((user, i) => (
-               <div>
-                {user}
-               </div>
+
+                    <div className="well"><span><b>{user.sender}:</b></span>{user.sendermsg}</div>
+               
                 ))
                 : ''
            }
@@ -96,7 +91,8 @@ class CommentBox extends Component {
 function mapStateToProps(state){
 console.log("COMMENT",state);
   return {
-    msg:state.getUserdetails.msg
+    msg:state.getUserdetails.msg,
+    l:state.getUserdetails.length
   }
 }
 

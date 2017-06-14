@@ -1,7 +1,8 @@
 
 var initialState = {
   userlist:[],
-  msg:[]
+  msg:[],
+  length:0
 
 }
 const getUserdetails = (state = initialState,action) =>{
@@ -10,9 +11,10 @@ const getUserdetails = (state = initialState,action) =>{
     case 'SET_USER_LIST':
       state = {...state,userlist:action.data};
       break;
-  
+
         case "SEND_MESSAGE":
-        state ={...state,msg:action.msg}
+        state ={...state,msg:action.msg,length:action.msg.length}
+
         break;
   }
 

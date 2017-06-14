@@ -23,10 +23,8 @@ class UserList extends Component {
      msgs:[]
    }
    this.abc = this.abc.bind(this);
-
- }
-
-
+   this.online = this.online.bind(this);
+   }
 
   componentWillMount(){
 
@@ -35,8 +33,13 @@ class UserList extends Component {
     socket.emit('join',{roomid:this.props.loggedUser._id});
   }
   abc(data){
+    console.log("Sender",data);
+    var senderdata= {
+      sender:data.name,
+      sendermsg:data.msg
+    };
     var msgArray = this.state.msgs;
-      msgArray.push(data.msg);
+      msgArray.push(senderdata);
 
       this.setState({msg:msgArray});
 
@@ -46,11 +49,16 @@ class UserList extends Component {
       })
   }
 
+online(data){
+  console.log("onlien" , data);
+}
 componentDidMount(){
-    console.log(this.state);
+
     socket.on('new_msg',this.abc);
+    socket.on('online',this.online);
 
 }
+
 
   joinRoom(e){
     this.setState({ roomid: e.target.value});
@@ -60,9 +68,11 @@ componentDidMount(){
     e.preventDefault();
       socket.emit('new',{id:this.state.roomid,data:this.refs.msg.value,name:this.props.loggedUser.email});
   }
-
+  componentWillReceiveProps(nextProps){
+    console.log("component will recieve props", nextProps);
+  }
   render() {
-
+      console.log('render');
     return (
       <div className=" col-md-4">
         <div className="jumbotron">
