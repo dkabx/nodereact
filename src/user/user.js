@@ -4,20 +4,11 @@ import '../login.css';
 import Sidebar from './Sidebar';
 import CommentBox from './commentbox';
 import UserList from './userlist';
+import {connect} from 'react-redux';
 // import createHistory from 'history/createBrowserHistory';
 
 // var history = createHistory();
 class User extends Component {
-	constructor(){
-		super();
-
-		this.state = {
-			email: '',
-			password:'',
-			errors:{},
-
-		}
-	}
 
   render() {
     return (
@@ -31,7 +22,6 @@ class User extends Component {
     );
   }
 }
-
 
 
 

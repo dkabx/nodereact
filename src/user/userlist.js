@@ -19,10 +19,13 @@ class UserList extends Component {
    super();
    this.state = {
      roomid:'',
-     users:[]
+     users:[],
+     msgs:[]
    }
+   this.abc = this.abc.bind(this);
 
  }
+
 
 
   componentWillMount(){
@@ -31,22 +34,26 @@ class UserList extends Component {
 
     socket.emit('join',{roomid:this.props.loggedUser._id});
   }
+  abc(data){
+    var msgArray = this.state.msgs;
+      msgArray.push(data.msg);
+
+      this.setState({msg:msgArray});
+
+      store.dispatch({
+        type:"SEND_MESSAGE",
+        msg:this.state.msgs
+      })
+  }
 
 componentDidMount(){
-  socket.on('new_msg',function(data){
-    store.dispatch({
-      type:"SEND_MESSAGE",
-      data:data
-    })
-    // this.props.sendmessage(data);
-  });
+    console.log(this.state);
+    socket.on('new_msg',this.abc);
+
 }
 
   joinRoom(e){
-
     this.setState({ roomid: e.target.value});
-
-
   }
 
   sendMsg(e){
@@ -92,6 +99,7 @@ function mapStateToProps(state){
     loggedUser:state.loginreducer.user
   }
 }
+
 function mapDispatchToProps(dispatch){
   return bindActionCreators({getUserList:getUserList,sendmessage:sendmessage},dispatch)
 }

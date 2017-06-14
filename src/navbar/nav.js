@@ -60,9 +60,9 @@ class Nav extends Component {
   }
 }
 
-Nav.contextTypes = {
-  router: React.PropTypes.object.isRequired
-}
+// Nav.contextTypes = {
+//   router: React.PropTypes.object.isRequired
+// }
 
 function mapStateToProps(state){
 
