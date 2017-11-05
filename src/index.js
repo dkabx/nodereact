@@ -29,7 +29,7 @@ var history = createHistory();
 ReactDOM.render(
 	<SocketProvider socket={socket}>
 <Provider store={store} >
- <Router history={ history }>
+ <Router history={ history } socket={socket}>
 	<div>
 	<Route path='/' component={Nav} />
 

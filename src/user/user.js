@@ -16,7 +16,7 @@ class User extends Component {
 					<div className='row'>
 						<Sidebar />
 						<CommentBox />
-						<UserList />
+						<UserList {...this.props} />
 					</div>
       	</div>
     );

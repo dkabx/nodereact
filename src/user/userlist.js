@@ -28,7 +28,9 @@ class UserList extends Component {
 
   componentWillMount(){
 
-    this.props.getUserList();
+    this.props.getUserList().then(()=>{
+
+    });
 
     socket.emit('join',{roomid:this.props.loggedUser._id});
   }
@@ -50,7 +52,12 @@ class UserList extends Component {
   }
 
 online(data){
-  console.log("onlien" , data);
+var a = data.id;
+
+if(this.refs[a])
+this.refs[a].style.display = "block";
+// this.refs[a].style.display = "block";
+
 }
 componentDidMount(){
 
@@ -82,7 +89,7 @@ componentDidMount(){
                  this.props.userlist.map((user, i) => (
                    <div>
                    <label><input  className="messageCheckbox"  onClick={this.joinRoom.bind(this)} value={user._id} name="a"  type="radio" /> {user.email}</label>
-                   {/*<span style={{display: 'block'}} ref={user.id}><img height='8px' width="8px" src="http://www.clker.com/cliparts/Z/n/g/w/C/y/green-dot-md.png"/></span>*/}
+              <span style={{display: 'none'}}  ref={user._id}><img height='8px' width="8px" src="http://www.clker.com/cliparts/Z/n/g/w/C/y/green-dot-md.png"/></span>
                    </div>
                     ))
                  : ''

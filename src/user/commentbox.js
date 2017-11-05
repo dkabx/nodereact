@@ -50,10 +50,12 @@ class CommentBox extends Component {
             {this.props.msg.length ? this.props.msg.map((user, i) => (
 
                     <div className="well"><span><b>{user.sender}:</b></span>{user.sendermsg}</div>
-               
+
                 ))
                 : ''
            }
+           {this.props.msg.length ? <div className="well"><span><b>dk:</b></span>{this.props.msg[this.props.msg.length - 1]}</div>
+          : ''}
           </div>
      </div>
 
